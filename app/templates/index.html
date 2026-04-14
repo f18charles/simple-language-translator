@@ -23,6 +23,22 @@
             <div id="result" class="card-body"></div>
         </div>
         
+        <div class="card mt-3 p2">
+            <div class="card-body">
+                <table class="table">
+                    <tr>
+                        <th>English</th>
+                        <th>Swahili</th>
+                    </tr>
+                    {% for key, value in dictionary.items %}
+                    <tr>
+                        <td>{{key}}</td>
+                        <td>{{value}}</td>
+                    </tr>
+                    {% endfor %}   
+                </table>
+            </div>
+        </div>
     </div>
 
     <script>

@@ -17,7 +17,7 @@ dictionary = {
 }
 
 def HomeView(request):
-    return render(request, "index.html")
+    return render(request, "index.html", {"dictionary": dictionary})
 
 @require_POST
 def TranslatorView(request):
