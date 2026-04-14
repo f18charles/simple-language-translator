@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Translator</title>
+
+</head>
+<body>
+    <h1>Swahili Translator</h1>
+
+    <form id="translator-form" method="post">
+        {% csrf_token %}
+        <input type="text" id="word-input" placeholder="Enter word to translate" />
+        <select id="language">
+            <option value="sw">English → Swahili</option>
+            <option value="en">Swahili → English</option>
+        </select>
+        <input type="submit" value="Translate">
+    </form>
+
+    <div id="result"></div>
+
+    <script>
+        const form = document.getElementById('translator-form');
+        const resultDiv = document.getElementById('result');
+        
+
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const word = document.getElementById('word-input').value;
+            const language = document.getElementById('language').value
+            document.getElementById("translator-form").addEventListener("submit", function(e) {
+                e.preventDefault();
+            })
+            const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+            const response = await fetch('/api/v1/translate-text', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrfToken,
+                },
+                body: JSON.stringify({
+                    text: word, 
+                    targetLanguage: language
+                })
+            });
+
+            const data = await response.json();
+
+            if (data.translatedText) {
+            resultDiv.textContent = `Translation: ${data.translatedText}`;
+            } else {
+            resultDiv.textContent = word
+            }
+        });
+    </script>
+</body>
+</html> 
